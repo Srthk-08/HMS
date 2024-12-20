@@ -1,20 +1,21 @@
 // controllers/AdminController.mjs
 import Admin from '../models/AdminModel.mjs';
+import jwt from "jsonwebtoken"
 
 // Create a new Admin
 export const createAdmin = async (req, res) => {
   try {
-    const { admin_id, name, email, password } = req.body;
+    const {  name, email, password } = req.body;
 
     // Validate the request body
-    if (!admin_id || !name || !email || !password) {
+    if (!name || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
     // Check for duplicate admin_id or email
-    const existingAdmin = await Admin.findOne({ $or: [{ admin_id }, { email }] });
+    const existingAdmin = await Admin.findOne({ $or: [{ email }] });
     if (existingAdmin) {
-      return res.status(409).json({ message: 'Admin ID or Email already exists' });
+      return res.status(409).json({ message: ' Email already exists' });
     }
 
     const newAdmin = new Admin({ admin_id, name, email, password });

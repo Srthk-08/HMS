@@ -28,3 +28,14 @@ POST /api/addresses - Create a new address
 GET /api/addresses/:id - Get an address by ID
 PUT /api/addresses/:id - Update an address by ID
 DELETE /api/addresses/:id - Delete an address by ID
+
+
+..........................
+fetch for token 
+const response = await fetch("https://your-api-url.com/api/protected-route", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`, // Attach the token in the Authorization header
+        "Content-Type": "application/json",
+      },
+    }

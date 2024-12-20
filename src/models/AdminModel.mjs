@@ -19,6 +19,11 @@ const AdminSchema = new Schema({
     type: String,
     required: true,
   },
+  valid:{
+    type:Boolean,
+    default:false,
+    require:true
+  }
 });
 
 // Create and export the Admin model
