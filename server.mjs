@@ -6,11 +6,6 @@ import cors from "cors"
 import adminRoutes from './src/routes/adminRoutes.mjs';
 const app=express();
 
-//aanand
-
-
-
-
 // Middleware
 
 //for  Logging Requests
