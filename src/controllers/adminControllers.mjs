@@ -10,7 +10,6 @@ export const createAdmin = async (req, res) => {
 
     // Validate the request body
     if (!name || !email || !password) {
-    if (!name || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
