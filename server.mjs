@@ -1,12 +1,24 @@
 import express from "express"
 import connectDb from "./src/config/mongoDbConfig.mjs";
+import bodyParser from "body-parser";
+import morgan from "morgan";
+import cors from "cors"
 const app=express();
 
 
 
+
+
+// Middleware
+
+//for  Logging Requests
+app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(cors());
+
+
 //routes
-
-
 app.get("/",(req,res)=>{
     res.send("hello")
 })
