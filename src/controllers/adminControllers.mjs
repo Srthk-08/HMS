@@ -1,6 +1,7 @@
 // controllers/AdminController.mjs
 import bcrypt from 'bcryptjs';
 import Admin from '../models/AdminModel.mjs';
+import jwt from "jsonwebtoken"
 
 // Create a new Admin
 export const createAdmin = async (req, res) => {
@@ -8,6 +9,7 @@ export const createAdmin = async (req, res) => {
     const { name, email, password } = req.body;
 
     // Validate the request body
+    if (!name || !email || !password) {
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
