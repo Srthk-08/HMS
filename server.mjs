@@ -5,6 +5,11 @@ import morgan from "morgan";
 import cors from "cors"
 import adminRoutes from './src/routes/adminRoutes.mjs';
 const app=express();
+//routes import
+import bedRoutes from "./src/routes/bedRoutes.mjs"
+import roomRoutes from './src/routes/roomRoutes.mjs';
+import addressRoutes from './src/routes/addressRoutes.mjs';
+import hostelRoutes from "./src/routes/hostelRoutes.mjs"
 
 // Middleware
 
@@ -16,7 +21,15 @@ app.use(cors());
 
 
 //routes
-app.use('/api', adminRoutes);
+
+
+
+
+app.use('/api/addresses', addressRoutes);
+app.use('/api/hostel', hostelRoutes);
+app.use('/api/room', roomRoutes);
+app.use('/api/admins', adminRoutes);
+app.use('/api/bed', bedRoutes);
 
 app.get("/",(req,res)=>{
     res.send("hello")

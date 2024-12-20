@@ -5,11 +5,6 @@ const { Schema, model } = mongoose;
 
 // Define the schema for the Admin model
 const AdminSchema = new Schema({
-  admin_id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,

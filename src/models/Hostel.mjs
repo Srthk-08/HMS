@@ -1,12 +1,7 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 // Define the hostel schema
 const hostelSchema = new mongoose.Schema({
-  Hostel_id: {
-    type: String, // Use string if IDs are alphanumeric, or you can use ObjectId if you're linking to other collections
-    required: true,
-    unique: true
-  },
   Hostel_name: {
     type: String,
     required: true
@@ -17,7 +12,7 @@ const hostelSchema = new mongoose.Schema({
   },
   Hostel_Address: {
     type: String,
-    required: true
+    required: false
   },
   Admin_id: {
     type: mongoose.Schema.Types.ObjectId, //  Admin is a separate collection
@@ -30,4 +25,4 @@ const hostelSchema = new mongoose.Schema({
 const Hostel = mongoose.model('Hostel', hostelSchema);
 
 // Export the model
-module.exports = Hostel;
+export default Hostel;

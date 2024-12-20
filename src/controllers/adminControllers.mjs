@@ -1,3 +1,4 @@
+// controllers/AdminController.mjs
 import Admin from '../models/AdminModel.mjs';
 
 // Create a new Admin

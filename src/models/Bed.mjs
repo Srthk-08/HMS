@@ -2,11 +2,9 @@ import mongoose from "mongoose";
 
 // Define the bed schema
 const bedSchema = new mongoose.Schema({
-  Bed_id: {
-    type: String, // Unique identifier for the bed, can be alphanumeric
-    required: true,
-    unique: true
-  },
+    Bad_no:{type:Number
+           ,required:true
+    },
   Room_id: {
     type: mongoose.Schema.Types.ObjectId, // Reference to the Room collection
     ref: 'Room', // Reference to the Room model
@@ -23,7 +21,7 @@ const bedSchema = new mongoose.Schema({
   },
   Bed_Rent: {
     type: Number, // Rent for the bed
-    required: true
+    required: false
   },
   Student_Id: {
     type: mongoose.Schema.Types.ObjectId, // Reference to the Student collection
