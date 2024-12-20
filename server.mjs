@@ -3,6 +3,7 @@ import connectDb from "./src/config/mongoDbConfig.mjs";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors"
+import adminRoutes from './src/routes/adminRoutes.mjs';
 const app=express();
 
 //aanand
@@ -20,6 +21,8 @@ app.use(cors());
 
 
 //routes
+app.use('/api', adminRoutes);
+
 app.get("/",(req,res)=>{
     res.send("hello")
 })
