@@ -1,32 +1,33 @@
-import multer from "multer"
-import path from "path"
+import multer from 'multer';
+import path from 'path';
 
-// Set up storage engine for multer (for saving files to the server)
+// Set up multer storage engine
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      // You can change this to any folder where you want to store the resumes
-      cb(null, './uploads/');
-    },
-    filename: (req, file, cb) => {
-      // Set the filename to the original file name (you can modify this to add timestamps for uniqueness)
-      cb(null,  Date.now() + path.extname(file.originalname));
-    }
-  });
-  
-  // Initialize multer with the storage configuration
-  const upload = multer({
-    storage: storage,
-    // limits: { fileSize: 10 * 1024 * 1024 }, // Max size: 10MB
-    fileFilter: (req, file, cb) => {
-      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-      if (!allowedTypes.includes(file.mimetype)) {
-        return cb(new Error('Invalid file type. Only PDF and Word documents are allowed.'));
-      }
-      cb(null, true);
-    }
-  });
-  
-  export default upload;
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Specify folder where files will be uploaded
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Create a unique file name
+  }
+});
 
+// File filter for allowed file types (e.g., images only)
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = /jpg|jpeg|png|gif/;
+  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = allowedTypes.test(file.mimetype);
 
-  
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    return cb(new Error('Only image files are allowed.'));
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB file size limit
+});
+
+export default upload;

@@ -5,11 +5,6 @@ const { Schema, model } = mongoose;
 
 // Define the schema for the Student model
 const StudentSchema = new Schema({
-  Student_id: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   Student_name: {
     type: String,
     required: true,

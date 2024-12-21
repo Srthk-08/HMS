@@ -12,6 +12,7 @@ import roomRoutes from './src/routes/roomRoutes.mjs'; // Routes for room-related
 import addressRoutes from './src/routes/addressRoutes.mjs'; // Routes for address-related operations
 import hostelRoutes from "./src/routes/hostelRoutes.mjs"; // Routes for hostel-related operations
 import otpRoutes from "./src/routes/otpRoutes.mjs"; // Routes for OTP-related operations
+import studentRoutes from "./src/routes/studentRoutes.mjs"; // Routes for student-related operations
 
 const app = express();
 
@@ -48,6 +49,9 @@ app.use('/api/bed', bedRoutes);
 
 // OTP routes
 app.use('/api/otp', otpRoutes);
+
+// Student routes
+app.use('/api/student', studentRoutes);
 
 // A simple root route with JWT authorization
 app.get("/", (req, res) => {
