@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 // Define the bed schema
 const bedSchema = new mongoose.Schema({
-    Bad_no:{type:Number
+    Bed_no:{type:Number
            ,required:true
     },
   Room_id: {
