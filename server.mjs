@@ -12,12 +12,9 @@ import roomRoutes from './src/routes/roomRoutes.mjs'; // Routes for room-related
 import addressRoutes from './src/routes/addressRoutes.mjs'; // Routes for address-related operations
 import hostelRoutes from "./src/routes/hostelRoutes.mjs"; // Routes for hostel-related operations
 import otpRoutes from "./src/routes/otpRoutes.mjs"; // Routes for OTP-related operations
-<<<<<<< HEAD
 import studentRoutes from "./src/routes/studentRoutes.mjs"; // Routes for student-related operations
-
-=======
 import floorRoute from "./src/routes/floorRoutes.mjs"
->>>>>>> 1d5a04cbda45f18a12ffda95458f74f3234a8963
+
 const app = express();
 
 // Middleware
@@ -61,15 +58,13 @@ app.use('/api/room', roomRoutes);
 // Bed routes
 app.use('/api/bed', bedRoutes);
 
-<<<<<<< HEAD
+
 // OTP routes
 app.use('/api/otp', otpRoutes);
 
 // Student routes
 app.use('/api/student', studentRoutes);
 
-=======
->>>>>>> 1d5a04cbda45f18a12ffda95458f74f3234a8963
 // A simple root route with JWT authorization
 app.get("/", (err,req, res,next) => {
     console.log("globle errore handler")
