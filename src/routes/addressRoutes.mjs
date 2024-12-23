@@ -1,12 +1,13 @@
 import express from 'express';
 import AddressController from '../controllers/addressController.mjs';
+import validateJwt from '../middlewares/validateJwt.mjs';
 
 const router = express.Router();
 
-router.post('/', AddressController.createAddress);
-router.get('/', AddressController.getAddresses);
-router.get('/:id', AddressController.getAddressById);
-router.put('/:id', AddressController.updateAddress);
-router.delete('/:id', AddressController.deleteAddress);
+router.post('/', validateJwt,AddressController.createAddress);
+router.get('/', validateJwt,AddressController.getAddresses);
+router.get('/:id', validateJwt,AddressController.getAddressById);
+router.put('/:id', validateJwt,AddressController.updateAddress);
+router.delete('/:id', validateJwt,AddressController.deleteAddress);
 
 export default router;

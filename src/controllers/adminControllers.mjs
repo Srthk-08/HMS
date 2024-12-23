@@ -30,7 +30,7 @@ export const createAdmin = async (req, res) => {
     await newAdmin.save();
 
     // Generate a JWT token
-    const token = jwt.sign({ id: newAdmin._id, email: newAdmin.email }, ADMIN_TOKEN_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ id: newAdmin._id, email: newAdmin.email }, ADMIN_TOKEN_SECRET, { expiresIn: '24h' });
 
     res.status(201).json({ message: 'Admin created successfully', admin: newAdmin, token });
   } catch (error) {

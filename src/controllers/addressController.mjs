@@ -5,6 +5,7 @@ class AddressController {
   // Create a new Address
   async createAddress(req, res) {
     try {
+      const Admin_Id = req.admin.id;
       const { hostelId, street, city, state, pincode, district, country } = req.body;
 
       // Validate required fields
@@ -19,7 +20,8 @@ class AddressController {
         state,
         pincode,
         district,
-        country
+        country,
+        Admin_Id
       });
 
       const savedAddress = await newAddress.save();
@@ -32,7 +34,8 @@ class AddressController {
   // Get all Addresses
   async getAddresses(req, res) {
     try {
-      const addresses = await Address.find().populate('hostelId');
+      const Admin_Id = req.admin.id;
+      const addresses = await Address.find({Admin_Id}).populate('hostelId');
       res.status(200).json(addresses);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching addresses', error });
@@ -42,8 +45,9 @@ class AddressController {
   // Get a single Address by ID
   async getAddressById(req, res) {
     try {
+      const Admin_Id = req.admin.id;
       const { id } = req.params;
-      const address = await Address.findById(id).populate('hostelId');
+      const address = await Address.find({id,Admin_Id}).populate('hostelId');
 
       if (!address) {
         return res.status(404).json({ message: 'Address not found' });
@@ -58,13 +62,14 @@ class AddressController {
   // Update an Address by ID
   async updateAddress(req, res) {
     try {
+      const Admin_Id = req.admin.id;
       const { id } = req.params;
       const updates = req.body;
 
-      const updatedAddress = await Address.findByIdAndUpdate(id, updates, { new: true }).populate('hostelId');
+      const updatedAddress = await Address.findOneAndUpdate({Admin_Id}, updates, { new: true }).populate('hostelId');
       if (!updatedAddress) {
         return res.status(404).json({ message: 'Address not found' });
-      }
+      } 
 
       res.status(200).json({ message: 'Address updated successfully', address: updatedAddress });
     } catch (error) {
@@ -75,9 +80,11 @@ class AddressController {
   // Delete an Address by ID
   async deleteAddress(req, res) {
     try {
+      const Admin_Id = req.admin.id;
+
       const { id } = req.params;
 
-      const deletedAddress = await Address.findByIdAndDelete(id);
+      const deletedAddress = await Address.findOneAndDelete({id,Admin_Id});
       if (!deletedAddress) {
         return res.status(404).json({ message: 'Address not found' });
       }

@@ -1,45 +1,46 @@
 import Room from "./Room.mjs";
 import Hostel from "./Hostel.mjs";
 import mongoose from "mongoose";
+import Bed from "./Bed.mjs";
 
 // Define the floor schema
 const floorSchema = new mongoose.Schema(
   {
-  Floor_no: {
-    type: Number, // The floor number (e.g., 1, 2, 3, etc.)
-    required: true
-  },Hostel_id: {
-    type: mongoose.Schema.Types.ObjectId, // Reference to the Hostel collection
-    ref: 'Hostel', // Reference to Hostel collection
-    required: true
-  },
-  No_of_Rooms: {
-    type: Number, // Number of rooms on the floor
-    required: false
-  },
-  Floor_Rent: {
-    type: Number, // Rent for the floor
-    required: false
-  },
-  No_of_Washrooms: {
-    type: Number, // Number of washrooms on the floor
-    required: false
-  },
-  No_of_Kitchens:{
-    type:Number,
-    require:false
+    Floor_no: {
+      type: Number, // The floor number (e.g., 1, 2, 3, etc.)
+      required: true
+    }, Hostel_id: {
+      type: mongoose.Schema.Types.ObjectId, // Reference to the Hostel collection
+      ref: 'Hostel', // Reference to Hostel collection
+      required: true
+    },
+    No_of_Rooms: {
+      type: Number, // Number of rooms on the floor
+      required: false
+    },
+    Floor_Rent: {
+      type: Number, // Rent for the floor
+      required: false
+    },
+    No_of_Washrooms: {
+      type: Number, // Number of washrooms on the floor
+      required: false
+    },
+    No_of_Kitchens: {
+      type: Number,
+      require: false
+    }
   }
-}
 );
 
 floorSchema.post("save", async function (doc) {
   try {
+    const addHostal = await Hostel.findOneAndUpdate({ _id: doc.Hostel_id }, { $inc: { No_of_Floors: 1 } })
     if (doc.No_of_Rooms > 0) {
       const newRooms = Array.from({ length: doc.No_of_Rooms }, (_, index) => ({
-      
-          Room_no: index + 1,
-          Floor_no: doc._id,
-          Floor_id: doc.Floor_no,
+        Room_no: index + 1,
+        Floor_no: doc._id,
+        Floor_id: doc.Floor_no,
       }));
 
       const createdBeds = await Bed.insertMany(newBeds);
@@ -50,11 +51,12 @@ floorSchema.post("save", async function (doc) {
   }
 });
 
+
 floorSchema.pre("findOneAndDelete", async function (next) {
   try {
     // Fetch the document being deleted
     const doc = await this.model.findOne(this.getQuery());
-     
+
     // Check if the document exists
     if (!doc) {
       return next(new Error("Floor not found"));
@@ -104,19 +106,6 @@ floorSchema.pre("deleteMany", async function (next) {
       console.log(`${deletedRooms.deletedCount} rooms deleted.`);
     }
 
-    // Update the Hostel by decrementing the number of floors
-    // const updateHostel = await Hostel.findByIdAndUpdate(
-    //   doc.Hostel_id,
-    //   { $inc: { No_of_Floors: -1 } },
-    //   { new: true } // This will return the updated document
-    // );
-
-    // if (!updateHostel) {
-    //   return next(new Error("Hostel not found or update failed"));
-    // }
-
-    // console.log(`Hostel updated: ${updateHostel.No_of_Floors} floors remaining.`);
-
     next(); // Proceed with the delete operation
 
   } catch (err) {
@@ -125,7 +114,7 @@ floorSchema.pre("deleteMany", async function (next) {
   }
 });
 
-  
+
 
 
 // Create a model from the schema

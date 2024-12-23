@@ -4,7 +4,9 @@ class HostelController {
   // Create a new Hostel
   async createHostel(req, res) {
     try {
-      const { Hostel_name, No_of_Floors, Hostel_Address, Admin_id } = req.body;
+      const Admin_id = req.admin.id;
+      const { Hostel_name, No_of_Floors } = req.body;
+
 
       // Validate required fields
       if (!Hostel_name || !No_of_Floors || !Admin_id) {
@@ -14,7 +16,6 @@ class HostelController {
       const newHostel = new Hostel({
         Hostel_name,
         No_of_Floors,
-        Hostel_Address,
         Admin_id,
       });
 
@@ -28,7 +29,9 @@ class HostelController {
   // Get all Hostels
   async getHostels(req, res) {
     try {
-      const hostels = await Hostel.find().populate('Admin_id');
+      const Admin_id=req.admin.id;
+
+      const hostels = await Hostel.find({Admin_id}).populate('Admin_id');
       res.status(200).json(hostels);
     } catch (error) {
       res.status(500).json({ message: 'Error fetching hostels', error });
@@ -71,9 +74,10 @@ class HostelController {
   // Delete a Hostel by ID
   async deleteHostel(req, res) {
     try {
+      const Admin_id = req.admin.id;
       const { id } = req.params;
 
-      const deletedHostel = await Hostel.findByIdAndDelete(id);
+      const deletedHostel = await Hostel.findOneAndDelete({id,Admin_id});
       if (!deletedHostel) {
         return res.status(404).json({ message: 'Hostel not found' });
       }

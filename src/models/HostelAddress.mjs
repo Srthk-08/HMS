@@ -30,6 +30,11 @@ const addressSchema = new mongoose.Schema({
   country: {
     type: String,
     required: true
+  },
+  Admin_Id:{type:mongoose.Schema.Types.ObjectId,
+    ref:"Admin",
+    required:true
+
   }
 }, { timestamps: true });
 
