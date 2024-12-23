@@ -12,8 +12,12 @@ import roomRoutes from './src/routes/roomRoutes.mjs'; // Routes for room-related
 import addressRoutes from './src/routes/addressRoutes.mjs'; // Routes for address-related operations
 import hostelRoutes from "./src/routes/hostelRoutes.mjs"; // Routes for hostel-related operations
 import otpRoutes from "./src/routes/otpRoutes.mjs"; // Routes for OTP-related operations
+<<<<<<< HEAD
 import studentRoutes from "./src/routes/studentRoutes.mjs"; // Routes for student-related operations
 
+=======
+import floorRoute from "./src/routes/floorRoutes.mjs"
+>>>>>>> 1d5a04cbda45f18a12ffda95458f74f3234a8963
 const app = express();
 
 // Middleware
@@ -31,6 +35,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Routes
+import demoRoutes from "./src/routes/demoRoute.mjs"
+//for code testing
+app.use("/",demoRoutes)
+
+
+// Admin routes
+app.use('/api/admins', adminRoutes);
+
+// OTP routes
+app.use('/api/otp', otpRoutes);
 
 // Address routes
 app.use('/api/addresses', addressRoutes);
@@ -38,24 +52,28 @@ app.use('/api/addresses', addressRoutes);
 // Hostel routes
 app.use('/api/hostel', hostelRoutes);
 
+//floor
+app.use("/api/floor",floorRoute)
+
 // Room routes
 app.use('/api/room', roomRoutes);
-
-// Admin routes
-app.use('/api/admins', adminRoutes);
 
 // Bed routes
 app.use('/api/bed', bedRoutes);
 
+<<<<<<< HEAD
 // OTP routes
 app.use('/api/otp', otpRoutes);
 
 // Student routes
 app.use('/api/student', studentRoutes);
 
+=======
+>>>>>>> 1d5a04cbda45f18a12ffda95458f74f3234a8963
 // A simple root route with JWT authorization
-app.get("/", (req, res) => {
-    res.send("Hello, welcome to the API!");
+app.get("/", (err,req, res,next) => {
+    console.log("globle errore handler")
+    res.send({error:err});
 });
 
 // Connect to the database
