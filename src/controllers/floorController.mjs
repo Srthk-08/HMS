@@ -57,7 +57,7 @@ class FloorController {
   // Get all Floors
   async getFloors(req, res) {
     try {
-      const Admin_Id=req.admin.id;
+      const Admin_Id = req.admin.id;
       const floors = await Floor.find().populate('Hostel_id');
       res.status(200).json(floors);
     } catch (error) {
@@ -84,9 +84,14 @@ class FloorController {
   // Update a Floor by ID
   async updateFloor(req, res) {
     try {
+      const Admin_Id = req.admin.id;
       const { id } = req.params;
       const updates = req.body;
-
+      const getFloor = await Floor.findById(id);
+      const getHostel = await Hostel.findById(getFloor.Hostel_id);
+      if(Admin_Id!=getHostel.Admin_id){
+        return res.status(200).json({message:"Hostel not found with these Admin Id"});
+      }
       const updatedFloor = await Floor.findByIdAndUpdate(id, updates, { new: true }).populate('Hostel_id');
       if (!updatedFloor) {
         return res.status(404).json({ message: 'Floor not found' });

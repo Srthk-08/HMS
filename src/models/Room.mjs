@@ -38,6 +38,11 @@ const roomSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  Admin_Id : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref : 'Admin',
+    required: false
+  }
 });
 
 
